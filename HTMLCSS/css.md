@@ -120,11 +120,11 @@
  - CSS Box Model
    - 전체 CSS box model은 블록 박스에 적용되며, 인라인 박스는 박스 모델에 정의된 일부 동작만 사용
    - Box 구성
+   ![BOX MODEL](../images/box-model.png)
      - content box: 콘텐츠가 표시되는 영역. width and height와 같은 속성을 사용해 크기 지정.
      - padding box: 패딩은 콘텐츠 주변 영역. padding와 관련 속성을 사용해 제어
      - border box: 콘텐츠와 패딩까지 포함. border와 관련 속성을 사용하여 제어
      - margin box: 여백은 가장 바깥 쪽 레이어로 콘텐츠와 패딩, 테두리를 둘러싸면서 당 박스와 다른 요소 사이 공백 역할.margin와 관련 속성을 사용하여 제어
-- [BOX MODEL](../images/box-model.png)
 ---
 ### CSS 레이아웃
 
