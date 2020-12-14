@@ -1,6 +1,6 @@
 # 4장 변수와 스코프, 메모리
 
-> 키워드 
+>
     - 변수의 원시 값과 참조 값
     - 실행 컨텍스트
     - 가비지 컬렉션
@@ -31,6 +31,7 @@
        - 원시값은 변경 불가능한 값이기 때문에 값을 재할당하면 새로운 값을 위한 메모리 공간을 확보하여 변수가 참조하던 메모리 주소를 변경함. (100 -> 200)
 
 - **참조 값(Reference type)**
+  - 여러 값으로 구성되는 객체를 가리킴.
   - Object 
     - Array, Function, Date, RegExp, + (Map, WeakMap, Set, WeakSet )
   - 자바스크립트는 메모리 위치에 직접 접근 허용 안함.
@@ -50,14 +51,13 @@
     name.age = 27;
     console.log(name.age);    // undefined
     ```
-- 4.1.2  값 복사
+- 값 복사
   - 원시 값과 참조 값은 변수에서 다른 변수로 값을 복사할 때 다르게 동작한다.  
   - 원시 값
     - 현재 저장된 값을 새로 생성 후 변수에 복사함.
   - 참조 값
-    - 참조 값을 다른 변수로 복사 시, 원래 변수에 들어있던 값이 복사됨. 
-    - 이 값은 객체 자체가 아니라 **힙**에 저장된 객체를 가리키는 포인터.
-    - 참조값 복사 시 조작이 끝나면 두 변수는 같은 객체를 가리킴.
+    - 참조 값을 다른 변수로 복사 시,  **힙**에 저장된 객체를 가리키는 포인터가 복사됨.
+    - 참조값 복사 시 두 변수는 같은 객체를 가리킴.
     ```js
     var person = { 
       name: 'Kim',
@@ -75,9 +75,7 @@
 
 - 4.1.3 매개변수 전달
   - 함수 매개변수는 모두 값으로 전달된다.
-  - 매개변수를 값 형태로 넘기면 해당 값은 지역변수에 복사됨.
-  - arguments 객체의 한 자리를 차지.
-  - 참조 형태로 넘기면 메모리 상 값의 위치가 지역변수에 저장되므로, 변경 시 함수 바깥에도 해당 내용이 변경됨. 
+  - 함수 외부에 있는 값은 함수 내부의 매개변수에 복사되는데 변수 사이에 값을 복사하는 것과 마찬가지임. 
 
   ```js
   function addTen(num) {
@@ -102,6 +100,7 @@
   setName(person);
   console.log(person.name);    //"Nicholas"
   ```
+  - 매개 변수를 참조 형태로 넘기면 메모리 상 값의 위치가 지역변수에 저장되므로, 변경 시 함수 바깥에도 해당 내용이 변경됨. 
   - setName함수에 객체가 담긴 person을 넘기면 객체를 obj 매개변수에 복사. (참조값)
   - 결과적으로 함수 내부의 obj와 person이 같은 객체를 가리킴.
   - 함수 내부에서 obj에 name 프로퍼티 추가 시 함수 외부 person객체에도 반영됨.
@@ -123,7 +122,8 @@
 - `typeof `연산자는 변수가 어떤 타입인지 (원시 타입일 경우) 파악하는데 최적임.
 - 값이 객체 이거나 null이면 "object" 반환.
 - 참조 타입일 경우 어떤 타입의 객체인지 `instanceof` 연산자 사용.
-  - 변수가 주어진 참조 타입의 인스턴스일 때 true 반환.
+  - `instanceof` 연산자
+    - 변수가 주어진 참조 타입의 인스턴스일 때 true 반환.
   - 모든 참조 값은 Object의 인스턴스로 정의되어 있기 때문에 `true` 반환
   - 원시값은 Object의 인스턴스가 아니므로 항상 `false` 반환
   ```js
@@ -133,7 +133,7 @@
 ### 4.2 실행 컨텍스트와 스코프
 - **실행 컨텍스트** (execution context, EC). 
   - 실행할 코드에 제공할 환경 정보를 모아놓은 객체.
-  - 동일한 환경에 있는 코드를 실행할 때 필요한 환경 정보를 모아 컨텍스트를 구성하고 콜 스택(Call Stack)에 쌓아 올림.
+  - 동일한 환경에 있는 코드를 실행할 때 필요한 환경 정보를 모아 실행 컨텍스트를 구성하고 콜 스택(Call Stack)에 쌓아 올림.
   - 실행 컨텍스트를 구성하는 방법은 함수를 실행하는 것.
   - `전역 컨텍스트` : 자바스크립트 코드를 실행하는 순간 전역 컨텍스트가 활성화됨.
     - 가장 바깥쪽에 존재하는 실행 컨텍스트.
@@ -157,10 +157,16 @@
     ![실행컨텍스트와 콜 스택](../images/callstack.png)
 - 콜 스택 (Call Stack)
   - 함수 실행 시 실행 컨텍스트가 콜스택에 쌓이고, 함수 실행이 끝나면 해당 컨텍스트가 스택에서 제거되고, 이전 컨텍스트를 반환.
-
+  1. 전역 컨텍스트 콜 스택에 추가 후 코드를 순차적으로 실행.
+  1. outer 함수가 호출되면 outer 실행 컨텍스트를 생성한 후 콜스택에 추가.
+  2. 전역 컨텍스트와 관련된 코드의 실행을 중단하고 outer 실행 컨텍스트와 관련된 코드를 순차적으로 실행
+  3. 다시 inner 함수의 실행 컨텍스트가 콜 스택에 추가 
+  4. outer 컨텍스트는 중단하고 inner 함수 내부 코드를 진행.
+  5. 실행이 종료되면 콜 스택에서 제거되고 그 다음 코드 순차적 진행
+   
 ### 실행 컨텍스트 객체 구성 (ES5)
   1. Variale Environment : 현재 컨텍스트 내 식별자 정보 + 외부 환경 정보. 선언 시점의 Lexical Environment 스냅샷. 변경 사항 반영 안됨.
-  2. Lexical Environment : 현재 컨텍스트 내의 식별자 들의 정보 + 외부 환경 정보. 
+  2. Lexical Environment : 현재 컨텍스트 내의 식별자 들의 정보 + 외부 환경 정보. 변경 사항 반영.
   3. This Binding  : this로 지정된 객체가 저장됨. (없을 경우 전역 객체)
    > 실행 컨텍스트 생성 시 `VariableEnvironment`에 정보를 먼저 담은 뒤 이를 복사해 `LexicalEnvironment`를 만들고 이후에는 `LexicalEnvironment`를 주로 활용한다.
   #### Lexical Environment
@@ -175,16 +181,16 @@
   - 스코프 체인 (Scope Chain)
     > 식별자 유효범위를 안에서부터 바깥으로 차례로 검색해 나가는것.
     > `outerEnvironmentReference`를 통해서 스코프 체인을 연결한다.
-  - `outerEnvironmentReference`
+  - `outerEnvironmentReference` ( = OuterLexicalEnvironmentReference, 외부 렉시컬 환경에 대한 참조 )
     - `outerEnvironmentReference`는 현재 호출된 함수가 선언될 당시의 `LexicalEnvironment`를 참조한다. ( = 상위 Lexical Environment를 참조한다)
-    - `Lexical Environment`를 원소로 하는 링크드 리스트다.
+      - (이를 통해 단방향 링크드 리스트인 스코프 체인을 구현함)
     - 전역 컨텍스트의 경우 `outerEnvironmentReference` 는 `null`.
 
-    - 식별자 검색 과정
-      1. 현재 컨텍스트의 LexicalEnvironment 탐색하여 그 값 반환
-      2. 발견하지 못할 경우 outerEnvironmentReference에 담긴 LexicalEnvironment 탐색하여 반환하는 과정 반복.
-      3. 전역 컨텍스트의 LexicalEnvironment 까지 탐색을 계속함
-      4. 없을 경우 undefined 반환.
+    - 스코프 체인 동작 원리
+      1. 현재 실행 중인 실행 컨텍스트의 LexicalEnvironment 에서 식별자 검색
+      2. 발견하지 못할 경우 outerEnvironmentReference(외부 렉시컬 환경 참조)가 가리키는 LexicalEnvironment을 탐색. = 상위 스코프로 이동하며 식별자 검색.
+      3. 전역 컨텍스트의 LexicalEnvironment(스코프 체인의 종점) 까지 탐색을 계속함 
+      4. 없을 경우 참조 에러Reference Error 반환. = 식별자 결정에 실패. 
     ```js
     var a = 1;
     var outer = function () {
@@ -225,7 +231,7 @@
   - IE 는 임계점을 두고 해당 값 초과 시 가비지 컬렉터 실행.
  4.3.4 메모리관리
   - 개발자가 메모리 관리를 신경쓰지 않아도 된다.
-  - 필요 없어진 데이터에 null을 할당하여 참조를 제거하기. - 전역 변수, 전역 객체의 프로퍼티.
+  - 필요 없어진 데이터에 `null`을 할당하여 참조를 제거하기. - 전역 변수, 전역 객체의 프로퍼티.
   - 지역 변수는 컨텍스트 빠져나가면 자동으로 참조 제거.
 ### 4.4 요약
  - 모든 변수는 스코프라고 부르는 실행 컨텍스트에 존재.
@@ -258,6 +264,12 @@
 
 
 ###### 참고
-- 코어 자바스크립트
-- 모던 자바스크립트 딥 다이브
+- 책
+  - 코어 자바스크립트
+  - 모던 자바스크립트 딥 다이브
+- 웹 페이지
+  - [<번역>자바스크립트의 메모리 모델](https://junwoo45.github.io/2019-11-04-memory_model/)
+  - [[JS] 모던 자바스크립트 입문 8장 - 자바스크립트 평가와 실행 과정](https://www.three-snakes.com/java-script/modern-javascript-08-2)
+  - [[Javascript] Execution Context와 Lexical Environment](https://iamsjy17.github.io/javascript/2019/06/10/js33_execution_context.html)
+
 
