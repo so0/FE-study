@@ -165,7 +165,7 @@
   5. 실행이 종료되면 콜 스택에서 제거되고 그 다음 코드 순차적 진행
    
 ### 실행 컨텍스트 객체 구성 (ES5)
-  1. Variale Environment : 현재 컨텍스트 내 식별자 정보 + 외부 환경 정보. 선언 시점의 Lexical Environment 스냅샷. 변경 사항 반영 안됨.
+  1. Variable Environment : 현재 컨텍스트 내 식별자 정보 + 외부 환경 정보. 선언 시점의 Lexical Environment 스냅샷. 변경 사항 반영 안됨.
   2. Lexical Environment : 현재 컨텍스트 내의 식별자 들의 정보 + 외부 환경 정보. 변경 사항 반영.
   3. This Binding  : this로 지정된 객체가 저장됨. (없을 경우 전역 객체)
    > 실행 컨텍스트 생성 시 `VariableEnvironment`에 정보를 먼저 담은 뒤 이를 복사해 `LexicalEnvironment`를 만들고 이후에는 `LexicalEnvironment`를 주로 활용한다.
