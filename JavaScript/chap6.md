@@ -775,3 +775,8 @@ friend.sayName();
  - 자바스크립트에서 상속은 프로토타입 체인 개념을 통해 구현.
    - 프로토타입 체인
      - 생성자의 프로토타입에 다른 타입의 인스턴스를 할당하는 방법.
+     
+###### 참고
+ - [프로퍼티 getter와 setter](https://ko.javascript.info/property-accessors)
+ - [프로퍼티 플래그와 설명자](https://ko.javascript.info/property-descriptors)
+ - "모던 자바스크립트 Deep Dive" 책
