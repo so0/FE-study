@@ -19,7 +19,7 @@
     person.age = 29;
     person.job = "Software Engineer";
     person.sayName = function(){
-    alert(this.name);
+    console.log(this.name);
     };
 
     person.sayName();
@@ -31,28 +31,32 @@
       age : 29,
       job : "Software Engineer",
       sayName : function() {
-        alert(this.name);
+        console.log(this.name);
       }
     };
     ```
 ##### 6.1.1 프로퍼티 타입
-    - 프로퍼티의 특징을 내부적으로만 유효한 속성에 따라 설명한다.
-    - 자바스크립트 엔진 내부에서 구현하는 것으로 정의. 
-    - 자바스크립트에서 직ㅂ접적으로 접근할 방법이 없음.
-    - [[]] 속성 이름을 대괄호로 감싸 내부 속성임을 나타냄.
-    - 데이터 프로퍼티
-      - 데이터 값에 대한 단 하나의 위치를 포함하여 이 위치에서 값을 읽고 씀
-      1. `[[Configuable]]` - 해당 프로퍼티가 delete를 통해 삭제하거나, 프로퍼티 속성을 바꾸거나 접근자 프로퍼티로 변환할 수 있음을 나타냄. 기본값 : `true`
-      2. `[[Enumerable]]` - `for-in`루프에서 해당 프로퍼티를 반환함을 나타냄. 기본값 : `true`
-      3. `[[Writable]]` - 프로퍼티의 값을 바꿀 수 있음을 나타냄. 기본값 : `true`
-      4. `[[Value]]` - 프로퍼티의 실제 데이터 값을 포함한다. 프로퍼티의 값을 읽는 위치이며, 새로운 값을 쓰는 위치. 기본값 : `undefined`
+- 프로퍼티의 특징을 내부적으로만 유효한 속성에 따라 설명한다.
+- 자바스크립트 엔진 내부에서 구현하는 것으로 정의. 
+- 자바스크립트에서 직접적으로 접근할 방법이 없음.
+> `[[속성]]` : 속성 이름을 대괄호로 감싸 내부 속성임을 나타냄.
+- 종류
+  1. 데이터 프로퍼티(data property) 
+  2. 접근자 프로퍼티(accessor property) 
+  
+- 데이터 프로퍼티
+  - 데이터 값에 대한 단 하나의 위치를 포함하여 이 위치에서 값을 읽고 씀.
+  - 키와 값으로 구성된 일반적인 프로퍼티.
+    1. `[[Configuable]]` - 해당 프로퍼티가 delete를 통해 삭제하거나, 프로퍼티 속성을 바꾸거나 접근자 프로퍼티로 변환할 수 있음을 나타냄. 기본값 : `true`
+    2. `[[Enumerable]]` - `for-in`루프에서 해당 프로퍼티를 반환함을 나타냄. 기본값 : `true`
+    3. `[[Writable]]` - 프로퍼티의 값을 바꿀 수 있음을 나타냄. 기본값 : `true`
+    4. `[[Value]]` - 프로퍼티의 실제 데이터 값을 포함한다. 프로퍼티의 값을 읽는 위치이며, 새로운 값을 쓰는 위치. 기본값 : `undefined`
 ```js
 var person = {
   name: "Nicholas"
 }
-}
 ```
-- Object.defineProperty() 메서드
+- `Object.defineProperty()` 메서드
   - 기본 프로퍼티 속성을 변경
   - 프로퍼티를 추가하거나 수정할 객체, 프로퍼티 이름, 서술자(descriptor)객체 세 가지를 매개변수로 받음.
   - 서술자 객체의 프로퍼티는 내부 속성 이름과 1:1로 대응한다.
@@ -63,9 +67,9 @@ Object.defineProperty(person, "name", {
     value: "Nicholas"
 });
 
-alert(person.name);
+console.log(person.name);
 person.name = "Michael";
-alert(person.name);
+console.log(person.name);
 ```
 ```js
 var person = {};
@@ -73,9 +77,9 @@ Object.defineProperty(person, "name", {
     configurable: false,
     value: "Nicholas"
 });
-alert(person.name);
+console.log(person.name);
 delete person.name;
-alert(person.name);
+console.log(person.name);
 ```
 ```js
 var person = {};
@@ -90,18 +94,20 @@ Object.defineProperty(person, "name", {
     value: "Nicholas"
 });
 ```
-- Object.defineProperty() 호출 시 configuable, enumerable,writable의 값을 따로 명시하지 않는다면 기본 값은 `false`임. 
+- `Object.defineProperty()` 호출 시 configuable, enumerable, writable의 값을  **따로 명시하지 않는다면 기본 값은 `false`임.**
 
-    - 접근자 프로퍼티
-      - 데이터 값이 들어있지 않고, getter함수와 setter함수로 구성된다. (필수는 아님)
-      - 접근자 프로퍼티를 읽을 때는 getter함수가 호출.
-      - 접근자 프로퍼티에 쓰기 작업을 할 때는 새로운 값과 함께 함수를 호출하며 이 함수가 데이터를 어떻게 사용할 지 결정한다.
-      - 접근자 프로퍼티 네 가지 속성
-        1. `[[Configuable]]` - 해당 프로퍼티가 delete를 통해 삭제하거나, 프로퍼티 속성을 바꾸거나 접근자 프로퍼티로 변환할 수 있음을 나타냄. 기본값 : `true`
-        2. `[[Enumerable]]` - `for-in`루프에서 해당 프로퍼티를 반환함을 나타냄. 기본값 : `true`
-        3. `[[Get]]` - 프로퍼티를 읽을 때 호출할 함수. 기본값: `undefined`
-        4. `[[Set]]` - 프로퍼티를 바꿀 때 호출할 함수. 기본값: `undefined`
-      - 접근자 프로퍼티를 명시적으로 정의할 수는 없으며, Object.defineProperty()를 사용해야함. 
+- 접근자 프로퍼티
+  - 데이터 값이 들어있지 않고, `getter`함수와 `setter`함수로 구성된다. - 하나만 있어도 됨.
+  - 접근자 프로퍼티를 읽을 때는 `getter`함수가 호출.
+  - 접근자 프로퍼티에 쓰기 작업을 할 때는 새로운 값과 함께 함수를 호출하며 이 함수가 데이터를 어떻게 사용할 지 결정한다.
+- 접근자 프로퍼티 네 가지 속성
+  1. `[[Configuable]]` - 해당 프로퍼티가 delete를 통해 삭제하거나, 프로퍼티 속성을 바꾸거나 접근자 프로퍼티로 변환할 수 있음을 나타냄. 기본값 : `true`
+  2. `[[Enumerable]]` - `for-in`루프에서 해당 프로퍼티를 반환함을 나타냄. 기본값 : `true`
+      - enumerable 속성에 따라 콘솔을 찍었을 때 진한색, 연한색의 차이가 있음.
+  3. `[[Get]]` - 프로퍼티를 읽을 때 호출할 함수. 기본값: `undefined`. 매개변수 없음
+  4. `[[Set]]` - 프로퍼티를 바꿀 때 호출할 함수. 기본값: `undefined`,, 매개변수 하나 (value)
+- 접근자 프로퍼티를 명시적으로 정의할 수는 없으며, `Object.defineProperty()`를 사용해야함. 
+   >  객체 리터럴로 설정하는 방법도 있음. 
 ```js
 var book = {
     _year: 2004,
@@ -122,12 +128,12 @@ Object.defineProperty(book, "year", {
 });
 
 book.year = 2005;
-alert(book.edition);   //2
+console.log(book.edition);   //2
 
 ```
  - `_year` 의 밑줄(_) 은 객체 외부에서 접근하지 않겠다는 의도를 나타낼 때 쓰는 표기법.
- - getter함수만 지정 시 해당 프로퍼티는 읽기 전용이 되고 수정하는 시도는 무시됨.
- - setter함수만 지정 시 프로퍼티를 읽으려 하면 에러 발생 
+ - `getter`함수만 지정 시 해당 프로퍼티는 **읽기 전용**이 되고 수정하는 시도는 무시됨.
+ - `setter`함수만 지정 시 프로퍼티를 읽으려 하면 에러 발생 
 
  es5 이전 비표준 메서드를 이용해 접근자 프로퍼티를 생성함 
  `__defineGetter__()`
@@ -152,12 +158,26 @@ book.__defineSetter__("year", function(newValue){
 
 
 book.year = 2005;
-alert(book.edition);   //2
+console.log(book.edition);   //2
 ```
 
+- 객체 리터럴로 접근자 프로퍼티 설정 방법
+   - 객체 리터럴 안에서` getter`와 `setter` 메서드는 `get`과 `set`으로 나타낼 수 있음.
+```js
+let obj = {
+  get propName() {
+    // getter, obj.propName을 실행할 때 실행되는 코드
+  },
+
+  set propName(value) {
+    // setter, obj.propName = value를 실행할 때 실행되는 코드
+  }
+};
+```
+ - `getter` 메서드는 obj.propName을 사용해 프로퍼티를 읽으려고 할 때 실행되고, `setter` 메서드는 obj.propName = value으로 프로퍼티에 값을 할당하려 할 때 실행
 
 ##### 6.1.2 다중 프로퍼티 정의
-    - Object.defineProperties() 메서드
+ - `Object.defineProperties()` 메서드
       - 객체에서 프로퍼티 여러 개를 동시에 수정
       - 매개변수는 프로퍼티를 추가하거나 수정할 객체 , 프로퍼티 이름이 추가 및 수정할 프로퍼티 이름과 대응하는 객체 두 가지.
 ```js
@@ -188,7 +208,7 @@ Object.defineProperties(book, {
 });
     
 book.year = 2005;
-alert(book.edition);   //2
+console.log(book.edition);   //2
 ```
   - book객체에 _year, edition 두 데이터 프로퍼티와, 접근자 프로퍼티 year생성.
 ##### 6.1.3 프로퍼티 속성 읽기
@@ -221,16 +241,49 @@ Object.defineProperties(book, {
 });
     
 var descriptor = Object.getOwnPropertyDescriptor(book, "_year");
-alert(descriptor.value);          //2004
-alert(descriptor.configurable);   //false
-alert(typeof descriptor.get);     //"undefined"
+console.log(descriptor.value);          //2004
+console.log(descriptor.configurable);   //false
+console.log(typeof descriptor.get);     //"undefined"
 
 var descriptor = Object.getOwnPropertyDescriptor(book, "year");
-alert(descriptor.value);          //undefined
-alert(descriptor.enumerable);     //false
-alert(typeof descriptor.get);     //"function"
+console.log(descriptor.value);          //undefined
+console.log(descriptor.enumerable);     //false
+console.log(typeof descriptor.get);     //"function"
 
 ```
+
+  #####  + 객체 변경 방지
+
+ - 하나의 객체 내 프로퍼티 전체를 대상으로 하는 제약사항을 설정할 수 있는 메서드.
+    1. `Object.preventExtensions(obj)`
+     - 객체에 새로운 프로퍼티 추가 불가.
+    2. `Object.seal(obj)`
+     - 새로운 프로퍼티 추가나 기존 프로퍼티 삭제를 막음. 프로퍼티 전체에 configurable: false를 설정하는 것과 동일
+    3. `Object.freeze(obj)`
+     - 새로운 프로퍼티 추가나 기존 프로퍼티 삭제, 수정을 막음. 프로퍼티 전체에 configurable: false, writable: false를 설정하는 것과 동일
+ - 설정한 제약사항을 확인할 때 사용하는 메서드
+    1. `Object.isExtensible(obj)`
+     - 새로운 프로퍼티를 추가하는 게 불가능한 경우 false를, 그렇지 않은 경우 true를 반환
+    2. `Object.isSealed(obj)`
+     - 프로퍼티 추가, 삭제가 불가능하고 모든 프로퍼티가 configurable: false이면 true를 반환
+    3. `Object.isFrozen(obj)`
+     - 프로퍼티 추가, 삭제, 변경이 불가능하고 모든 프로퍼티가 configurable: false, writable: false이면 true를 반환
+
+ ###### 주의사항
+  - 프로퍼티는 접근자 프로퍼티(get/set 메서드를 가짐)나 데이터 프로퍼티(value를 가짐) 중 한 종류에만 속하고 둘 다에 속할 수 없다
+  - 한 프로퍼티에 get과 value를 동시에 설정하면 에러가 발생
+```js
+// Error: Invalid property descriptor.
+Object.defineProperty({}, 'prop', {
+  get() {
+    return 1
+  },
+
+  value: 2
+});
+```
+---
+
 ### 6.2 객체 생성
  > 객체 생성 시, 같은 인터페이스를 가진 객체를 여러 개 만들 경우 중복 코드 발생.
 ###### 6.2.1 팩터리 패턴
@@ -243,7 +296,7 @@ function createPerson(name, age, job){
     o.age = age;
     o.job = job;
     o.sayName = function(){
-        alert(this.name);
+        console.log(this.name);
     };    
     return o;
 }
@@ -264,7 +317,7 @@ function Person(name, age, job){
     this.age = age;
     this.job = job;
     this.sayName = function(){
-        alert(this.name);
+        console.log(this.name);
     };    
 }
 
@@ -287,15 +340,15 @@ var person2 = new Person("Greg", 27, "Doctor");
 person1.sayName();   //"Nicholas"
 person2.sayName();   //"Greg"
 
-alert(person1 instanceof Object);  //true
-alert(person1 instanceof Person);  //true
-alert(person2 instanceof Object);  //true
-alert(person2 instanceof Person);  //true
+console.log(person1 instanceof Object);  //true
+console.log(person1 instanceof Person);  //true
+console.log(person2 instanceof Object);  //true
+console.log(person2 instanceof Person);  //true
 
-alert(person1.constructor == Person);  //true
-alert(person2.constructor == Person);  //true
+console.log(person1.constructor == Person);  //true
+console.log(person2.constructor == Person);  //true
 
-alert(person1.sayName == person2.sayName);  //false        
+console.log(person1.sayName == person2.sayName);  //false        
 ```
  - constructor 프로퍼티
    - 두 객체의 constructor 프로퍼티는 Person을 가리킴
@@ -312,7 +365,7 @@ function Person(name, age, job){
     this.age = age;
     this.job = job;
     this.sayName = function(){
-        alert(this.name);
+        console.log(this.name);
     };
 }
 
@@ -340,7 +393,7 @@ function Person(name, age, job){
 }
 // 우회 방법
 function sayName(){
-    alert(this.name);
+    console.log(this.name);
 }
 
 var person1 = new Person("Nicholas", 29, "Software Engineer");
@@ -349,15 +402,15 @@ var person2 = new Person("Greg", 27, "Doctor");
 person1.sayName();   //"Nicholas"
 person2.sayName();   //"Greg"
 
-alert(person1 instanceof Object);  //true
-alert(person1 instanceof Person);  //true
-alert(person2 instanceof Object);  //true
-alert(person2 instanceof Person);  //true
+console.log(person1 instanceof Object);  //true
+console.log(person1 instanceof Person);  //true
+console.log(person2 instanceof Object);  //true
+console.log(person2 instanceof Person);  //true
 
-alert(person1.constructor == Person);  //true
-alert(person2.constructor == Person);  //true
+console.log(person1.constructor == Person);  //true
+console.log(person2.constructor == Person);  //true
 
-alert(person1.sayName == person2.sayName);  //true      
+console.log(person1.sayName == person2.sayName);  //true      
 ```
 - 함수 정의를 생성자 밖으로 내보내면 우회 가능.
 - 전역 스코프에서 정의된 sayName() 함수를 공유한다.
@@ -376,7 +429,7 @@ Person.prototype.name = "Nicholas";
 Person.prototype.age = 29;
 Person.prototype.job = "Software Engineer";
 Person.prototype.sayName = function(){
-    alert(this.name);
+    console.log(this.name);
 };
 
 var person1 = new Person();
@@ -385,7 +438,7 @@ person1.sayName();   //"Nicholas"
 var person2 = new Person();
 person2.sayName();   //"Nicholas"
 
-alert(person1.sayName == person2.sayName);  //true
+console.log(person1.sayName == person2.sayName);  //true
 ```
  - 생성자 함수는 비어 있지만, 생성자를 호출해 만든 객체에 프로퍼티와 메서드가 존재. 
  - 생성자 패턴과 달리 프로퍼티와 메서드를 모든 인스턴스로에서 공유하게됨.
@@ -409,15 +462,15 @@ Person.prototype.name = "Nicholas";
 Person.prototype.age = 29;
 Person.prototype.job = "Software Engineer";
 Person.prototype.sayName = function(){
-    alert(this.name);
+    console.log(this.name);
 };
 
 var person1 = new Person();
 var person2 = new Person();
 
 person1.name = "Greg";
-alert(person1.name);   //"Greg" � from instance
-alert(person2.name);   //"Nicholas" � from prototype
+console.log(person1.name);   //"Greg" � from instance
+console.log(person2.name);   //"Nicholas" � from prototype
 
 ```
   - 객체 인스턴스에서 프로토타입에 있는 값을 읽을 수 있지만 수정 불가.
@@ -431,18 +484,18 @@ Person.prototype.name = "Nicholas";
 Person.prototype.age = 29;
 Person.prototype.job = "Software Engineer";
 Person.prototype.sayName = function(){
-    alert(this.name);
+    console.log(this.name);
 };
 
 var person1 = new Person();
 var person2 = new Person();
 
 person1.name = "Greg";
-alert(person1.name);   //"Greg" � from instance
-alert(person2.name);   //"Nicholas" � from prototype
+console.log(person1.name);   //"Greg" � from instance
+console.log(person2.name);   //"Nicholas" � from prototype
 
 delete person1.name;
-alert(person1.name);   //"Nicholas" - from the prototype
+console.log(person1.name);   //"Nicholas" - from the prototype
 ```
   - 인스턴스 프로퍼티를 delete하면 다시 프로토타입의 프로퍼티에 접근 가능.
 
@@ -458,28 +511,28 @@ Person.prototype.name = "Nicholas";
 Person.prototype.age = 29;
 Person.prototype.job = "Software Engineer";
 Person.prototype.sayName = function(){
-    alert(this.name);
+    console.log(this.name);
 };
 
 var person1 = new Person();
 var person2 = new Person();
 
-alert(person1.hasOwnProperty("name"));  //false
-alert("name" in person1);  //true
+console.log(person1.hasOwnProperty("name"));  //false
+console.log("name" in person1);  //true
 
 person1.name = "Greg";
-alert(person1.name);   //"Greg" � from instance
-alert(person1.hasOwnProperty("name"));  //true
-alert("name" in person1);  //true
+console.log(person1.name);   //"Greg" � from instance
+console.log(person1.hasOwnProperty("name"));  //true
+console.log("name" in person1);  //true
 
-alert(person2.name);   //"Nicholas" � from prototype
-alert(person2.hasOwnProperty("name"));  //false
-alert("name" in person2);  //true
+console.log(person2.name);   //"Nicholas" � from prototype
+console.log(person2.hasOwnProperty("name"));  //false
+console.log("name" in person2);  //true
 
 delete person1.name;
-alert(person1.name);   //"Nicholas" - from the prototype
-alert(person1.hasOwnProperty("name"));  //false
-alert("name" in person1);  //true
+console.log(person1.name);   //"Nicholas" - from the prototype
+console.log(person1.hasOwnProperty("name"));  //false
+console.log("name" in person1);  //true
 ```
 
 > Object.getOwnPropertyDescriptor() 는 인스턴스 프로퍼티에만 동작함.
@@ -503,14 +556,14 @@ Person.prototype.name = "Nicholas";
 Person.prototype.age = 29;
 Person.prototype.job = "Software Engineer";
 Person.prototype.sayName = function(){
-    alert(this.name);
+    console.log(this.name);
 };
 
 var person = new Person();        
-alert(hasPrototypeProperty(person, "name"));  //true
+console.log(hasPrototypeProperty(person, "name"));  //true
 
 person.name = "Greg";
-alert(hasPrototypeProperty(person, "name"));  //false        
+console.log(hasPrototypeProperty(person, "name"));  //false        
 ```
 - _프로토타입의 대체 문법_
   - 모든 프로퍼티와 메서드를 담은 객체 리터럴로 프로토타입을 덮어쓸 수 있음.
@@ -523,16 +576,16 @@ Person.prototype = {
     age : 29,
     job: "Software Engineer",
     sayName : function () {
-        alert(this.name);
+        console.log(this.name);
     }
 };
 
 var friend = new Person();
 
-alert(friend instanceof Object);  //true
-alert(friend instanceof Person);  //true
-alert(friend.constructor == Person);  //false
-alert(friend.constructor == Object);  //true
+console.log(friend instanceof Object);  //true
+console.log(friend instanceof Person);  //true
+console.log(friend.constructor == Person);  //false
+console.log(friend.constructor == Object);  //true
 ```
  - constructor 프로퍼티가 Person을 가리키지 않음.. 
  - 네이티브 constructor 프로퍼티는 기본적으로 나열 불가능한 프로퍼티이다. 
@@ -553,7 +606,7 @@ Person.prototype = {
     age : 29,
     job : "Software Engineer",
     sayName : function () {
-        alert(this.name);
+        console.log(this.name);
     }
 };
 
@@ -589,7 +642,7 @@ function Person(name, age, job){
 Person.prototype = {
     constructor: Person,
     sayName : function () {
-        alert(this.name);
+        console.log(this.name);
     }
 };
 
@@ -598,10 +651,10 @@ var person2 = new Person("Greg", 27, "Doctor");
 
 person1.friends.push("Van");
 
-alert(person1.friends);    //"Shelby,Court,Van"
-alert(person2.friends);    //"Shelby,Court"
-alert(person1.friends === person2.friends);  //false
-alert(person1.sayName === person2.sayName);  //true
+console.log(person1.friends);    //"Shelby,Court,Van"
+console.log(person2.friends);    //"Shelby,Court"
+console.log(person1.friends === person2.friends);  //false
+console.log(person1.sayName === person2.sayName);  //true
 
 ```
 ###### 6.2.5 동적 프로토타입 패턴
@@ -619,7 +672,7 @@ function Person(name, age, job){
     if (typeof this.sayName != "function"){
     
         Person.prototype.sayName = function(){
-            alert(this.name);
+            console.log(this.name);
         };
         
     }
@@ -637,7 +690,7 @@ function Person(name, age, job){
     o.age = age;
     o.job = job;
     o.sayName = function(){
-        alert(this.name);
+        console.log(this.name);
     };    
     return o;
 }
@@ -666,9 +719,9 @@ function SpecialArray(){
 }
 
 var colors = new SpecialArray("red", "blue", "green");
-alert(colors.toPipedString()); //"red|blue|green"
+console.log(colors.toPipedString()); //"red|blue|green"
 
-alert(colors instanceof SpecialArray);
+console.log(colors instanceof SpecialArray);
 ```
  - 반환된 객체, 생성자, 생성자의 프로토타입 사이에 연결고리가 없음.
 ###### 6.2.7 방탄 생성자 패턴
@@ -683,7 +736,7 @@ function Person(name, age, job) {
   var o = new Object();
 
   o.sayName = function() {
-    alert(name);
+    console.log(name);
   }
   return 0;
 }
