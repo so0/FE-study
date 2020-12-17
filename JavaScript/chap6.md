@@ -428,27 +428,8 @@ console.log(person1.sayName == person2.sayName);  //true
     - 인스턴스와 직접 연결되는 것은 생성자의 프로토타입이지 생성자 자체가 아니다.
     - 객체 사이에 프로토타입 연결이 존재하는지 `isPrototypeOf()` 메서드를 통해 알 수 있다. 
     - `Object.getPrototypeOf()` :  `[[Prototype]]`의 값을 반환
-      ```js
-      function Person(){
-      }
-
-      Person.prototype.name = "Nicholas";
-      Person.prototype.age = 29;
-      Person.prototype.job = "Software Engineer";
-      Person.prototype.sayName = function(){
-          console.log(this.name);
-      };
-
-      var person1 = new Person();
-      var person2 = new Person();
-
-      person1.name = "Greg";
-      console.log(person1.name);   //"Greg"  from instance
-      console.log(person2.name);   //"Nicholas"  from prototype
-
-      ```
-  - 프로토타입 프로퍼티와 같은 이름의 프로퍼티 추가 시 해당 프로퍼티는 인스턴스에 추가됨.
-  - 인스턴스 프로퍼티가 프로토타입 프로퍼티를 '가린다'
+  
+  - 
     ```js
     function Person(){
     }
@@ -470,6 +451,9 @@ console.log(person1.sayName == person2.sayName);  //true
     delete person1.name;
     console.log(person1.name);   //"Nicholas" - from the prototype
     ```
+
+  - 프로토타입 프로퍼티와 같은 이름의 프로퍼티 추가 시 해당 프로퍼티는 인스턴스에 추가됨.
+  - 인스턴스 프로퍼티가 프로토타입 프로퍼티를 '가린다'
   - 인스턴스 프로퍼티를 `delete`하면 프로토타입의 프로퍼티에 접근 가능.
  - `hasOwnProperty()`
    - 프로퍼티가 **인스턴스에 존재**하는 지 확인하는 메서드.
