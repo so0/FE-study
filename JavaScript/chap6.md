@@ -33,7 +33,7 @@
       }
     };
     ```
-##### 6.1.1 프로퍼티 타입
+#### 6.1.1 프로퍼티 타입
 - 프로퍼티 속성 (프로퍼티 어트리뷰트)
   > 자바스크립트 엔진은 프로퍼티를 생성할 때 **프로퍼티의 상태**를 나타내는 프로퍼티 어트리뷰트를 기본 값으로 정의한다.
 - 프로퍼티 상태
@@ -145,7 +145,7 @@ let obj = {
 ```
  - `getter` 메서드는 obj.propName을 사용해 프로퍼티를 읽으려고 할 때 실행되고, `setter` 메서드는 obj.propName = value으로 프로퍼티에 값을 할당하려 할 때 실행
 
-##### 6.1.2 다중 프로퍼티 정의
+#### 6.1.2 다중 프로퍼티 정의
  - `Object.defineProperties()` 메서드
       - 프로퍼티 여러 개를 동시에 수정
       - 매개변수는 프로퍼티를 추가하거나 수정할 객체 , 프로퍼티 이름이 추가 및 수정할 프로퍼티 이름과 대응하는 객체 두 가지.
@@ -180,7 +180,7 @@ book.year = 2005;
 console.log(book.edition);   //2
 ```
 
-##### 6.1.3 프로퍼티 속성 읽기
+#### 6.1.3 프로퍼티 속성 읽기
    - `Object.getOwnPropertyDescriptor()` 메서드
       - 원하는 프로퍼티의 서술자 프로퍼티(프로퍼티 디스크립터 PropertyDescriptor 객체)를 읽을 수 있음.
       - 읽어올 프로퍼티가 포함된 객체, 서술자를 가져올 프로퍼티 이름 두 가지 매개변수를 받음.
@@ -220,7 +220,7 @@ console.log(descriptor.enumerable);     //false
 console.log(typeof descriptor.get);     //"function"
 ```
 
-#####  객체 변경 방지
+####  객체 변경 방지
   - 자바스크립트는 객체의 변경을 방지하는 메서드 + 설정한 제약사항을 확인하는 메서드를 제공함.
   1. 객체 확장 금지
      - `Object.preventExtensions(obj)`
@@ -256,7 +256,7 @@ console.log(typeof descriptor.get);     //"function"
 ### 6.2 객체 생성
  > 객체 생성 시, 같은 인터페이스를 가진 객체를 여러 개 만들 경우 중복 코드 발생.
 
-###### **생성자** 패턴
+#### **생성자** 패턴
  > ESCMAScript의 생성자는 특정 타입의 객체를 만드는데 사용. 
  커스텀 생성자를 만들어 원하는 타입의 객체에 필요한 프로퍼티와 메서드를 직접 정의 가능.
 - 생성자 함수 (constructor)
@@ -349,7 +349,7 @@ var person2 = new Person("Greg", 27, "Doctor");
    - 원시값을 반환하면 무시되고 this 반환
    - 객체를 반환하면 this반환이 무시됨.
   
-##### 내부 메서드 `[[Call]]` 과 `[[Construct]]`
+#### 내부 메서드 `[[Call]]` 과 `[[Construct]]`
   함수 선언문, 함수 표현식으로 정의한 함수는 **1. 일반 함수로 호출**, **2. 생성자 함수로서 호출** 가능하다.
 - 함수 객체만을 위한 내부 슬롯
   - 함수는 `[[Call]]`, `[[Construct]]` 같은 내부 메서드를 추가로 가지고 있음.
@@ -393,7 +393,7 @@ const obj = {
 new obj.x(); // TypeError: obj.x is not a constructor
 ```
 
-###### **프로토타입** 패턴
+#### **프로토타입** 패턴
  > 모든 함수는 `prototype` 프로퍼티를 가짐.
  생성자를 호출할 때 생성되는 객체의 프로토타입이다.
  프로토타입의 프로퍼티와 메서드는 **객체 인스턴스 전체에서 공유**된다.
@@ -532,7 +532,6 @@ console.log(friend.constructor == Person);  //false
 console.log(friend.constructor == Object);  //true
 ```
 
-
 - _프로토타입의 동적 성질_
   - 프로토타입에서 값을 찾는 작업은 런타임 검색임.
   - 프로토타입 값이 바뀌면 인스턴스에도 반영됨.
@@ -561,7 +560,7 @@ friend.sayName();   //error
   - 함수에는 이상적이다.
   - 원시값의 경우 할당 시 prototype 프로퍼티를 가림.
   - 프로퍼티가 참조값 인 경우 모든 인스턴스에서 공유하게 됨.
-###### **생성자 패턴**과 **프로토타입 패턴**의 조합
+#### **생성자 패턴**과 **프로토타입 패턴**의 조합
   - 생성자 패턴으로 인스턴스 프로퍼티를 정의 후 프로토타입 패턴으로 메서드와 공유 프로퍼티를 정의.
   - 자신만의 인스턴스 프로퍼티를 가지고 메서드는 공유한다.
     ```js
@@ -590,3 +589,8 @@ friend.sayName();   //error
     console.log(person1.sayName === person2.sayName);  //true
 
     ```
+
+###### 참고
+ - [프로퍼티 getter와 setter](https://ko.javascript.info/property-accessors)
+ - [프로퍼티 플래그와 설명자](https://ko.javascript.info/property-descriptors)
+ - "모던 자바스크립트 Deep Dive" 책
