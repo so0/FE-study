@@ -357,6 +357,7 @@ var person2 = new Person("Greg", 27, "Doctor");
   - 생성자 함수로 호출 시 내부 메서드 `[[Construct]]` 호출
 
 - 모든 함수가  `[[Construct]]` 를 갖진 않음.
+- `[[Construct]]` 를 갖는 함수 객체를 constructor (=생성자로서 호출할 수 있는 함수), 갖지 않는 함수 객체를 non-constructor (=생성자로서 호출할 수 없는 함수),라고 부른다.
 - 함수 객체는 constructor일 수도 있고, non-constructor일 수도 있다.
 
 - `constructor` 와 `non-constructor` 의 구분.
@@ -420,6 +421,7 @@ console.log(person1.sayName == person2.sayName);  //true
  - 프로퍼티와 메서드를 모든 인스턴스로에서 **공유**하게됨.
 ##### _**프로토타입**은 어떻게 동작하는가_
 -   ![프로토타입](../images/프로토타입1.png)
+    - 모든 함수는 `prototype` 프로퍼티를 가짐.
     - 모든 프로토타입은 자동으로 `constructor`프로퍼티를 가짐. 
     - `constructor` : 해당 프로토타입이 프로퍼티로서 소속된 함수.
     - `Pesron.prototype.constuctor` 는 `Person`.
