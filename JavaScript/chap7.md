@@ -2,11 +2,12 @@
 > 함수 표현식의 특징
  - 함수 정의 방법
    1. 함수 선언문
+    - name 프로퍼티 : function 키워드 뒤에 위치한 함수 이름.
    ```js
    function functionName(arg0, arg1, arg2) {
      // 함수 본문
    }
-   console.log(function.name)
+   console.log(function.name) // functionName
    ```
     - 함수 선언 끌어올림 (hoisting)
     ```js
@@ -23,10 +24,9 @@
    console.log(function.name)
    ```
    - 선언 전 할당 필요.
+   - function키워드 뒤 함수 이름이 없으므로 익명함수로 간주함.
    - 함수 표현식을 사용하여 함수를 다른 함수에서 반환할 수 있음.
    - 값처럼 쓰이는 함수.
-> 함수와 재귀
-> 클로저를 이용한 고유변수
 
 ### 7.1 재귀
  재귀 함수
@@ -44,7 +44,7 @@ var anotherFactorial = factorial;
 factorial = null;
 console.log(anotherFactorial(4));  //error!
 ```
- - `arguments.callee` : 현재 실행 중인 함수를 가리키는 포인터.
+ - factorial 이 null이 되어, 원래 함수에 대한 참조가 끊어짐.
 ```js
 function factorial(num){
     if (num <= 1){
@@ -58,8 +58,8 @@ var anotherFactorial = factorial;
 factorial = null;
 console.log(anotherFactorial(4));  //24
 ```
- - 스트릭트 모드에서는 에러 발생.
-- 이름 붙은 함수 표현식
+ - `arguments.callee` : 현재 실행 중인 함수를 가리키는 포인터.
+ - 스트릭트 모드에서는 arguments.callee에 접근 불가능하며, 에러 발생.
 ```js
 var factorial = (function f(num){
     if (num <= 1){
@@ -69,7 +69,7 @@ var factorial = (function f(num){
     }
 });
 ```
- - 이름 붙은 함수 표현식 f()를 생성하여 변수 factorial에 할당함.
+ - 이름 붙은 함수 표현식 `f()`를 생성하여 변수 factorial에 할당함.
  - 스트릭트, 비 스트릭트 모드에서 모두 동작.
 ### 7.2 클로저
  '클로저' : 다른 함수의 스코프에 있는 변수에 접근 가능한 함수.
@@ -194,7 +194,25 @@ console.log(person2.getName());   //"Michael"
   - 더글러스 크록포드가 고안한 패턴. 싱글톤과 같은 일을 함.
   - 싱글톤 : 인스턴스를 단 하나만 가지도록 의도한 객체
  ```js
+ var singleton = function () {
+   // 고유 변수와 함수
+   var privateVariable = 10;
+   function privateFunction() {
+     return false;
+   }
+   // 특권/공용 메서드와 프로퍼티.
+   return {
+     publicProperty: true,
+     publicMethod : function() {
+       privateVariable++;
+       return privateFunction();
+     }
+   }
+ }();
  ```
+  - 모듈 패턴은 객체를 반환하는 익명함수 사용.
+  - 객체 리터럴이 싱글톤에 대한 공용 인터페이스를 정의함.
+  - 싱글톤에 일종의 초기화가 필요하고 고유 변수에 접근해야할 때 유용한 패턴.
  ```js
  ```
  7.4.3 모듈 확장 패턴
@@ -218,3 +236,6 @@ console.log(person2.getName());   //"Michael"
   - 싱글톤
     - 모듈, 확장 패턴
   - 클로저 과용 시 메모리 소비가 늘어날 수 있다.
+
+##### 참고 사이트
+- [자바스크립트의 스코프와 클로저](https://meetup.toast.com/posts/86)
