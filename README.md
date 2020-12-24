@@ -7,6 +7,6 @@
  - 6장 객체 지향 프로그래밍
    - [객체, 프로토타입](https://github.com/so0/FE-study/blob/main/JavaScript/chap6.md)
    - [상속](https://github.com/so0/FE-study/blob/main/JavaScript/chap6-2.md)
- - 7장 함수 표현식
+ - [7장 함수 표현식](https://github.com/so0/FE-study/blob/main/JavaScript/chap7.md)
  - 13장 이벤트
  - 22장 고급 테크닉
