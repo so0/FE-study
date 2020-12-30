@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DOMContentLoaded Event Example</title>
+  </head>
+  <body>
+    <div id="myDiv">DOMContentLoaded example</div>
+    <script type="text/javascript">
+      window.addEventListener("DOMContentLoaded", function (event) {
+        alert("DOMContentLoaded.");
+      });
+      window.addEventListener("load", function (event) {
+        alert("load.");
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Keypress Event Example</title>
+  </head>
+  <body>
+    <input type="text" id="myText" />
+    <script type="text/javascript">
+      var textbox = document.getElementById("myText");
+      textbox.addEventListener("keypress", function (event) {
+        alert(event.charCode);
+      });
+    </script>
+  </body>
+</html>

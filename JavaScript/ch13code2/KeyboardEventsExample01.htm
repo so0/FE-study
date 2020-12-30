@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Keyboard Events Example</title>
+  </head>
+  <body>
+    <input type="text" id="myText" />
+    <script type="text/javascript">
+      var textbox = document.getElementById("myText");
+      textbox.addEventListener("keyup", function (event) {
+        alert(event.keyCode);
+      });
+    </script>
+  </body>
+</html>

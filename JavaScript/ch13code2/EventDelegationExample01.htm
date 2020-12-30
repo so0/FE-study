@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Event Delegation Example</title>
+  </head>
+  <body>
+    <ul id="myLinks">
+      <li id="goSomewhere">Go somewhere</li>
+      <li id="doSomething">Do something</li>
+      <li id="sayHi">Say hi</li>
+    </ul>
+    <script type="text/javascript">
+      (function () {
+        var list = document.getElementById("myLinks");
+
+        list.addEventListener("click", function (event) {
+          var target = event.target;
+
+          switch (target.id) {
+            case "doSomething":
+              document.title = "I changed the document's title";
+              break;
+
+            case "goSomewhere":
+              location.href = "http://www.wrox.com";
+              break;
+
+            case "sayHi":
+              alert("hi");
+              break;
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

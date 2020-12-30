@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BeforeUnload Event Example</title>
+  </head>
+  <body>
+    <div id="myDiv">Try to navigate away from this page.</div>
+    <script type="text/javascript">
+      window.addEventListener("beforeunload", function (event) {
+        var message = "I'm really going to miss you if you go.";
+        event.returnValue = message;
+        return message;
+      });
+    </script>
+  </body>
+</html>

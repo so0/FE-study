@@ -70,7 +70,8 @@
 - 마우스로 어떤 동작을 취할 때 발생하는 이벤트.
 - 웹에서 가장 많이 쓰는 이벤트 그룹 중하나.
 - 마우스 이벤트 종류
-  - `click` : 마우스 버튼 클릭 or  엔터키 누를 때
+
+  - `click` : 마우스 버튼 클릭 or 엔터키 누를 때
   - `dbclick` : 더블클릭
   - `mousedown` : 마우스 버튼을 누를 때
   - `mouseup` : 마우스 버튼을 누르고 있다가 놓을 때
@@ -106,7 +107,7 @@
 - 키보드 이벤트는 사용자가 키보드를 조작할 때 발생.
 
   - `keydown` : 키를 처음 누를 때 발생, 누르고 있는 동안 발생
-  - `keypress` : 키를 누른 결과로 **문자**가 입력되었을 때 발생. 
+  - `keypress` : 키를 누른 결과로 **문자**가 입력되었을 때 발생.
     - control, option, shift, tab, delete , 방향키 등 눌렀을 때는 발생하지 않음.
   - `keyup` : 키를 뗄 때 발생
 
@@ -182,6 +183,7 @@
 ```
 
 DOM 레벨 3 에서 바뀐점
+
 - `key` 프로퍼티
   - `keyCode` 교체할 의도로 도입
   - 문자 키를 누르면 해당 문자 "k", "M"
@@ -190,6 +192,7 @@ DOM 레벨 3 에서 바뀐점
   - 문자 키를 누르면 해당 문자 "k", "M"
   - 문자 키가 아닌 키를 누르면 `null`
 - `location` 프로퍼티
+
   - 키를 어디에서 눌렀는지 나타내는 숫자값
   - 기본 키보드 : 0
   - 왼쪽 : 1 (왼쪽 Alt키)
@@ -198,7 +201,8 @@ DOM 레벨 3 에서 바뀐점
   - 모바일 환경 가상 키보드 : 4
   - 조이스틱 : 5
 
--  [keycode 참고 사이트](http://keycode.info/)
+- [keycode 참고 사이트](http://keycode.info/)
+
 ##### matation event
 
 > DOM의 일부가 바꼈을 때 알리는 변경 이벤트.
@@ -231,7 +235,7 @@ DOM 레벨 3 에서 바뀐점
   <body>
     <div id="myDiv">Try to navigate away from this page.</div>
     <script type="text/javascript">
-      window.addEventListner("beforeunload", function (event) {
+      window.addEventListener("beforeunload", function (event) {
         var message = "I'm really going to miss you if you go.";
         event.returnValue = message;
         return message;
