@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Drag and Drop Example</title>
+  </head>
+  <body>
+    <div id="status"></div>
+    <div id="myDiv1" class="draggable" style="top: 100px; left: 0px; background: red; width: 100px; height: 100px; position: absolute"></div>
+    <div id="myDiv2" class="draggable" style="background: blue; width: 100px; height: 100px; position: absolute; top: 100px; left: 100px"></div>
+    <script type="text/javascript">
+      function EventTarget() {
+        this.handlers = {};
+      }
+
+      EventTarget.prototype = {
+        constructor: EventTarget,
+
+        addHandler: function (type, handler) {
+          if (typeof this.handlers[type] == "undefined") {
+            this.handlers[type] = [];
+          }
+
+          this.handlers[type].push(handler);
+        },
+
+        fire: function (event) {
+          if (!event.target) {
+            event.target = this;
+          }
+          if (this.handlers[event.type] instanceof Array) {
+            var handlers = this.handlers[event.type];
+            for (var i = 0, len = handlers.length; i < len; i++) {
+              handlers[i](event);
+            }
+          }
+        },
+
+        removeHandler: function (type, handler) {
+          if (this.handlers[type] instanceof Array) {
+            var handlers = this.handlers[type];
+            for (var i = 0, len = handlers.length; i < len; i++) {
+              if (handlers[i] === handler) {
+                break;
+              }
+            }
+
+            handlers.splice(i, 1);
+          }
+        },
+      };
+
+      var DragDrop = (function () {
+        var dragdrop = new EventTarget(),
+          dragging = null,
+          diffX = 0,
+          diffY = 0;
+
+        function handleEvent(event) {
+          //get event and target
+          var target = event.target;
+
+          //determine the type of event
+          switch (event.type) {
+            case "mousedown":
+              if (target.className.indexOf("draggable") > -1) {
+                dragging = target;
+                diffX = event.clientX - target.offsetLeft;
+                diffY = event.clientY - target.offsetTop;
+                dragdrop.fire({ type: "dragstart", target: dragging, x: event.clientX, y: event.clientY });
+              }
+              break;
+
+            case "mousemove":
+              if (dragging !== null) {
+                //assign location
+                dragging.style.left = event.clientX - diffX + "px";
+                dragging.style.top = event.clientY - diffY + "px";
+
+                //fire custom event
+                dragdrop.fire({ type: "drag", target: dragging, x: event.clientX, y: event.clientY });
+              }
+              break;
+
+            case "mouseup":
+              dragdrop.fire({ type: "dragend", target: dragging, x: event.clientX, y: event.clientY });
+              dragging = null;
+              break;
+          }
+        }
+
+        //public interface
+        dragdrop.enable = function () {
+          document.addEventListener("mousedown", handleEvent);
+          document.addEventListener("mousemove", handleEvent);
+          document.addEventListener("mouseup", handleEvent);
+        };
+
+        dragdrop.disable = function () {
+          document.addEventListener("mousedown", handleEvent);
+          document.addEventListener("mousemove", handleEvent);
+          document.addEventListener("mouseup", handleEvent);
+        };
+
+        return dragdrop;
+      })();
+
+      DragDrop.enable();
+
+      DragDrop.addHandler("dragstart", function (event) {
+        var status = document.getElementById("status");
+        status.innerHTML = "Started dragging " + event.target.id;
+      });
+
+      DragDrop.addHandler("drag", function (event) {
+        var status = document.getElementById("status");
+        status.innerHTML += "<br>Dragged " + event.target.id + " to (" + event.x + "," + event.y + ")";
+      });
+
+      DragDrop.addHandler("dragend", function (event) {
+        var status = document.getElementById("status");
+        status.innerHTML += "<br>Dropped " + event.target.id + " at (" + event.x + "," + event.y + ")";
+      });
+    </script>
+  </body>
+</html>
