@@ -1,14 +1,10 @@
 # 브라우저 디버깅 도구
 
-## 브라우저별 자바스크립트 디버깅 도구 종류 및 기능
-
-- 크롬
-- 인터넷 익스플로러
-- 파이어폭스
-- 사파리
+> 브라우저별 자바스크립트 디버깅 도구 종류 및 기능
 
 ## 크롬 개발자도구
 
+- [Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools)
 - 키보드 단축키 `Ctrl+Shift+I` (Windows)나 `Cmd+Opt+I` (Mac) 로 열기
 
 #### Elements
@@ -23,6 +19,8 @@
   - `Computed` 탭에서 선택된 요소에 적용된 최종 스타일 확인
 
 - 선택한 DOM 노드를 콘솔창에서 `$0` 로 참조 가능
+- ![elements](/images/elements.png)
+- ![device](/images/device.png)s
 
 #### Console
 
@@ -34,7 +32,22 @@
   - 글로벌 변수로 저장 - 우클릭 store as global variable
     - temp1 에 저장됨.
   - `console.time`
+  - ```js
+    console.time("start");
+    for (let i = 0; i < 10000; i++) {
+      i = i * 1000;
+    }
+    console.timeEnd("start");
+    ```
   - `console.group`
+    ```js
+    console.group();
+    console.log(1);
+    console.log(2);
+    console.groupEnd();
+    console.log(3);
+    ```
+- [console](https://developer.mozilla.org/ko/docs/Web/API/Console)
 
 #### Source
 
@@ -58,28 +71,74 @@
 - `DOMContentLoaded` : DOM Tree 구조를 그리는데 걸리는 시간.
 - `Load` : DOM Tree 구조를 포함, 이미지까지 화면에 로드되는 시간.
 - Capture screenshot 옵션
+  ![snapshot](/images/snapshot.png)
 - Replay XHR
+- ![replayxhr](/images/replayxhr.png)
+
 - 트래픽 조절
   - 느린 네트워크 상황일 경우 테스트
+- - ![network](/images/network.png)
 
 #### Application (Resources)
 
 - 현재 로딩된 웹 페이지에서 사용된 리소스를 볼 수 있는 패널
 - Web Storage 확인
   - 세션, 로컬스토리지, 쿠키 등
+    ![application](/images/application.png)
 
 #### Performance (Timeline)
 
+- 성능 측정
+  ![performance](/images/performance.png)
+
+  - [타임라인 도구 사용법 | Chrome DevTools | Google Developers](https://developers.google.com/web/tools/chrome-devtools/evaluate-performance/timeline-tool?hl=ko)
+
+  - [개발자도구 - Performance편](https://tuhbm.github.io/2019/04/02/devTools-performance/)
+
 #### Memory (Profiles)
 
-#### Security
+- 메모리 사용 상태 를 볼 수 있고, 누수를 탐색할 수 있는 패널
+- [메모리 문제 해결 | Chrome DevTools | Google Developers](https://developers.google.com/web/tools/chrome-devtools/memory-problems?hl=ko)
+  ![memory](/images/memory.png)
+  ![memory](/images/memory2.png)
+
+#### Audits (LightHouse)
+
+- 웹 에플리케이션의 성능을 향상시킬 수 있는 방법들을 컨설팅해주는 도구
+- 페이지를 분석하고 최적화를 위한 팁 제공
+  ![audit](/images/audit.png)
+  ![audit](/images/audit2.png)
+  - [개발자도구 - Audits편](https://tuhbm.github.io/2019/04/10/devTools-audits/)
+
+## 그 외 브라우저
+
+- 대부분 브라우저는 F12 를 통해 브라우저에서 개발자 도구를 열 수 있음.
+- 크롬 개발자도구와 인터페이스는 거의 유사.
+
+- Safari
+  - [사파리](https://developer.apple.com/safari/tools/)
+  - 환경설정 - 고급 패널에서 개발자용 메뉴 보기 체크로 활성화. -`Cmd + Opt + C`로 개발자 콘솔 여닫을 수 있음.
+- Firefox
+  - [파이퍼폭스 개발자도구 MDN](https://developer.mozilla.org/ko/docs/Tools)
+  - 디벨로퍼 에디션도 따로 제공
+    - [파이퍼폭스 developer edition](https://www.mozilla.org/ko/firefox/developer/)
+- IE
+  - [Using the F12 developer tools](<https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/samples/bg182326(v=vs.85)?redirectedfrom=MSDN>)
+  - [IE 개발자도구 참고용 블로그](http://www.egocube.pe.kr/lecture/content/html-javascript/201901010001)
+
+---
+
+## 모바일 디버깅
+
+#### Chrome remote Debugging
+
+- [Chrome DevTools에서 Device Mode로 휴대기기 시뮬레이션](https://developers.google.com/web/tools/chrome-devtools/remote-debugging?hl=ko)
+
+#### Safari remote Debugging
+
+- [How to Debug on iPhone Safari](https://www.browserstack.com/guide/how-to-debug-on-iphone)
 
 ###### 참고
 
-[Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools)
-
-<!-- https://ui.toast.com/fe-guide/ko_DEBUG -->
-
-[Console](https://developer.mozilla.org/en-US/docs/Web/API/Console)
-
-<!-- [사파리](https://developer.apple.com/safari/tools/) -->
+[개발자 콘솔](https://ko.javascript.info/devtools#ref-521)
+[디버깅](https://ui.toast.com/fe-guide/ko_DEBUG)
