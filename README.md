@@ -8,5 +8,7 @@
    - [객체, 프로토타입](https://github.com/so0/FE-study/blob/main/JavaScript/chap6.md)
    - [상속](https://github.com/so0/FE-study/blob/main/JavaScript/chap6-2.md)
  - [7장 함수 표현식](https://github.com/so0/FE-study/blob/main/JavaScript/chap7.md)
- - 13장 이벤트
- - 22장 고급 테크닉
+ - 13장 이벤트   
+   - [이벤트, 이벤트 핸들러](https://github.com/so0/FE-study/blob/main/JavaScript/chap13.md)
+   - [이벤트 타입](https://github.com/so0/FE-study/blob/main/JavaScript/chap13-2.md)
+ - [22장 고급 테크닉](https://github.com/so0/FE-study/blob/main/JavaScript/chap22.md)
