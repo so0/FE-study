@@ -88,12 +88,22 @@ test('two plus two is four', () => {
 `not`
 동일하지 않은 경우 체크
 
+```js
+test('adding positive numbers is not zero', () => {
+  for (let a = 1; a < 10; a++) {
+    for (let b = 1; b < 10; b++) {
+      expect(a + b).not.toBe(0);
+    }
+  }
+});
+```
+
 ##### Truthiiness
 
 - 값이 Truthy 한지, falsy 한지 체크.
 - `toBeNull`
   `toBeUndefined`
-  `toBeDefined`
+  `toBeDefined` : toBeUndefined 반대
   `toBeTruthy`
   `toBefalsy`
 
@@ -157,9 +167,160 @@ test('the shopping list has beer on it', () => {
 });
 ```
 
-### Jest 환경 구성
+##### Exceptions
 
-### Jest 예제 코드 작성 및 정리
+```js
+function compileAndroidCode() {
+  throw new Error('you are using the wrong JDK');
+}
+
+test('compiling android goes as expected', () => {
+  expect(() => compileAndroidCode()).toThrow();
+  expect(() => compileAndroidCode()).toThrow(Error);
+
+  // You can also use the exact error message or a regexp
+  expect(() => compileAndroidCode()).toThrow('you are using the wrong JDK');
+  expect(() => compileAndroidCode()).toThrow(/JDK/);
+});
+```
+
+### Asynchronous Code
+
+##### Callback
+
+```js
+test('the data is peanut butter', (done) => {
+  function callback(data) {
+    try {
+      expect(data).toBe('peanut butter');
+      done();
+    } catch (error) {
+      done(error);
+    }
+  }
+
+  fetchData(callback);
+});
+```
+
+- test 함수에 done 인자 추가
+
+##### Promise
+
+```js
+test('the data is peanut butter', () => {
+  return fetchData().then((data) => {
+    expect(data).toBe('peanut butter');
+  });
+});
+test('the fetch fails with an error', () => {
+  expect.assertions(1);
+  return fetchData().catch((e) => expect(e).toMatch('error'));
+});
+```
+
+##### Async / Await
+
+```js
+test('the data is peanut butter', async () => {
+  const data = await fetchData();
+  expect(data).toBe('peanut butter');
+});
+
+test('the fetch fails with an error', async () => {
+  expect.assertions(1);
+  try {
+    await fetchData();
+  } catch (e) {
+    expect(e).toMatch('error');
+  }
+});
+```
+
+### Setup and Teardown
+
+##### Repeating Setup For Many Tests
+
+테스트 전, 후 코드 제어
+
+`beforeEach` / `afterEach`
+모든 테스트마다 전 후로 해야하는 작업
+
+```js
+beforeEach(() => {
+  initializeCityDatabase();
+});
+
+afterEach(() => {
+  clearCityDatabase();
+});
+
+test('city database has Vienna', () => {
+  expect(isCity('Vienna')).toBeTruthy();
+});
+
+test('city database has San Juan', () => {
+  expect(isCity('San Juan')).toBeTruthy();
+});
+```
+
+##### One-Time Setup
+
+`beforeAll`, `afterAll`
+테스트 전 , 후 한번만 동작
+
+```js
+beforeAll(() => {
+  return initializeCityDatabase();
+});
+
+afterAll(() => {
+  return clearCityDatabase();
+});
+
+test('city database has Vienna', () => {
+  expect(isCity('Vienna')).toBeTruthy();
+});
+
+test('city database has San Juan', () => {
+  expect(isCity('San Juan')).toBeTruthy();
+});
+```
+
+##### Scoping
+
+`describe`
+`before`,`after` 블록이 적용되는 단위.
+
+```js
+// Applies to all tests in this file
+beforeEach(() => {
+  return initializeCityDatabase();
+});
+
+test('city database has Vienna', () => {
+  expect(isCity('Vienna')).toBeTruthy();
+});
+
+test('city database has San Juan', () => {
+  expect(isCity('San Juan')).toBeTruthy();
+});
+
+describe('matching cities to foods', () => {
+  // Applies only to tests in this describe block
+  beforeEach(() => {
+    return initializeFoodDatabase();
+  });
+
+  test('Vienna <3 sausage', () => {
+    expect(isValidCityFoodPair('Vienna', 'Wiener Schnitzel')).toBe(true);
+  });
+
+  test('San Juan <3 plantains', () => {
+    expect(isValidCityFoodPair('San Juan', 'Mofongo')).toBe(true);
+  });
+});
+```
 
 ##### 참고 사이트
 
