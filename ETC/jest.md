@@ -326,3 +326,8 @@ describe('matching cities to foods', () => {
 
 [Jest Getting Started](https://jestjs.io/docs/en/next/getting-started)
 [Jest API Reference](https://jestjs.io/docs/en/api)
+
+##### 북마크
+
+[Jest와 Vue Test Utils(VTU)로 Vue 컴포넌트 단위(Unit) 테스트](https://heropy.blog/2020/05/20/vue-test-with-jest/)
+[Cracking Vue.js - Vue Test Utils](https://joshua1988.github.io/vue-camp/testing/getting-started.html)
