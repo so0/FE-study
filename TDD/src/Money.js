@@ -2,36 +2,43 @@
 // const Franc = require('./Franc');
 
 class Money {
-  constructor(amount) {
+  constructor(amount, currency) {
     this.amount = amount;
+    this.currency = currency;
   }
   equals(object) {
     const money = object;
     return this.amount === money.amount;
   }
   static dollar(amount) {
-    return new Dollar(amount);
+    return new Dollar(amount, 'USD');
   }
   static franc(amount) {
-    return new Franc(amount);
+    return new Franc(amount, 'CHF');
   }
 }
 
 class Dollar extends Money {
-  constructor(amount) {
-    super(amount);
+  constructor(amount, currency) {
+    super(amount, currency);
   }
   times(multiplier) {
-    return new Dollar(this.amount * multiplier);
+    return Money.dollar(this.amount * multiplier);
+  }
+  currency() {
+    return this.currency;
   }
 }
 
 class Franc extends Money {
-  constructor(amount) {
-    super(amount);
+  constructor(amount, currency) {
+    super(amount, currency);
   }
   times(multiplier) {
-    return new Franc(this.amount * multiplier);
+    return Money.franc(this.amount * multiplier);
+  }
+  currency() {
+    return this.currency;
   }
 }
 
