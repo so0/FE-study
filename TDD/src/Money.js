@@ -1,6 +1,3 @@
-// const Dollar = require('./Dollar');
-// const Franc = require('./Franc');
-
 class Money {
   constructor(amount, currency) {
     this.amount = amount;
@@ -18,31 +15,11 @@ class Money {
     return new Money(this.amount * multiplier, this.currency);
   }
   static dollar(amount) {
-    return new Dollar(amount, 'USD');
+    return new Money(amount, 'USD');
   }
   static franc(amount) {
-    return new Franc(amount, 'CHF');
+    return new Money(amount, 'CHF');
   }
 }
 
-class Dollar extends Money {
-  constructor(amount, currency) {
-    super(amount, currency);
-  }
-  currency() {
-    return this.currency;
-  }
-}
-
-class Franc extends Money {
-  constructor(amount, currency) {
-    super(amount, currency);
-  }
-  currency() {
-    return this.currency;
-  }
-}
-
-module.exports.Money = Money;
-module.exports.Dollar = Dollar;
-module.exports.Franc = Franc;
+module.exports = Money;

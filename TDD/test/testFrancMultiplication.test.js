@@ -1,4 +1,4 @@
-const { Money } = require('../src/Money');
+const Money = require('../src/Money');
 
 test('test Multiplication', () => {
   const five = Money.franc(5);

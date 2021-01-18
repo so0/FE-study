@@ -1,5 +1,5 @@
-const { Money, Franc } = require('../src/Money');
+const Money = require('../src/Money');
 
 test('test different class equality', () => {
-  expect(new Franc(10, 'CHF').equals(new Money(10, 'CHF'))).toBeTruthy();
+  expect(new Money(10, 'CHF').equals(new Money(10, 'CHF'))).toBeTruthy();
 });
