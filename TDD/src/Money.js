@@ -8,7 +8,14 @@ class Money {
   }
   equals(object) {
     const money = object;
-    return this.amount === money.amount;
+    return this.amount === money.amount && this.currency === money.currency;
+  }
+  toString() {
+    // 디버깅용
+    return this.amount + ' ' + this.currency;
+  }
+  times(multiplier) {
+    return new Money(this.amount * multiplier, this.currency);
   }
   static dollar(amount) {
     return new Dollar(amount, 'USD');
@@ -22,9 +29,6 @@ class Dollar extends Money {
   constructor(amount, currency) {
     super(amount, currency);
   }
-  times(multiplier) {
-    return Money.dollar(this.amount * multiplier);
-  }
   currency() {
     return this.currency;
   }
@@ -33,9 +37,6 @@ class Dollar extends Money {
 class Franc extends Money {
   constructor(amount, currency) {
     super(amount, currency);
-  }
-  times(multiplier) {
-    return Money.franc(this.amount * multiplier);
   }
   currency() {
     return this.currency;
