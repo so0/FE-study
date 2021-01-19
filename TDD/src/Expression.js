@@ -1,3 +1,3 @@
-// interface Expression
-
 class Expression {}
+
+module.exports = Expression;
