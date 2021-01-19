@@ -19,8 +19,9 @@ class Money {
   plus(addend) {
     return new Sum(this, addend);
   }
-  reduce(to) {
-    return this;
+  reduce(bank, to) {
+    const rate = bank.rate(this.currency, to);
+    return new Money(this.amount / rate, to);
   }
   static dollar(amount) {
     return new Money(amount, 'USD');
