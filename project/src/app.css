@@ -1,0 +1,9 @@
+body {
+  background-color: gray;
+}
+
+#balloon {
+  background-image: url(balloons.jpg);
+  width: 426px;
+  height: 640px;
+}
